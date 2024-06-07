@@ -18,7 +18,7 @@ do
   then
     # Insert teams into teams table
     # Check if winner exists
-    WINNER_ID=$($PSQL "SELECT teamid FROM teams WHERE name='$winner'")
+    WINNER_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$winner'")
     if [[ -z $WINNER_ID ]]
     then
       # insert winner
@@ -28,11 +28,11 @@ do
         echo "Inserted into teams: $winner"
       fi
       # Get new winner id
-      WINNER_ID=$($PSQL "SELECT teamid FROM teams WHERE name='$winner'")
+      WINNER_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$winner'")
     fi
 
     # Check if opponent exists
-    OPPONENT_ID=$($PSQL "SELECT teamid FROM teams WHERE name='$opponent'")
+    OPPONENT_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$opponent'")
     if [[ -z $OPPONENT_ID ]]
     then
       # insert opponent
@@ -42,7 +42,7 @@ do
         echo "Inserted into teams: $opponent"
       fi
       # Get new opponent id
-      OPPONENT_ID=$($PSQL "SELECT teamid FROM teams WHERE name='$opponent'")
+      OPPONENT_ID=$($PSQL "SELECT team_id FROM teams WHERE name='$opponent'")
     fi
 
     # Insert game into games table

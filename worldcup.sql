@@ -53,8 +53,8 @@ CREATE TABLE public.games (
     round character varying(100) NOT NULL,
     winner_goals integer NOT NULL,
     opponent_goals integer NOT NULL,
-    winner_id integer,
-    opponent_id integer
+    winner_id integer NOT NULL,
+    opponent_id integer NOT NULL
 );
 
 
@@ -87,8 +87,8 @@ ALTER SEQUENCE public.games_game_id_seq OWNED BY public.games.game_id;
 --
 
 CREATE TABLE public.teams (
-    teamid integer NOT NULL,
-    name character varying(255)
+    team_id integer NOT NULL,
+    name character varying(255) NOT NULL
 );
 
 
@@ -113,7 +113,7 @@ ALTER TABLE public.teams_teamid_seq OWNER TO freecodecamp;
 -- Name: teams_teamid_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: freecodecamp
 --
 
-ALTER SEQUENCE public.teams_teamid_seq OWNED BY public.teams.teamid;
+ALTER SEQUENCE public.teams_teamid_seq OWNED BY public.teams.team_id;
 
 
 --
@@ -124,10 +124,10 @@ ALTER TABLE ONLY public.games ALTER COLUMN game_id SET DEFAULT nextval('public.g
 
 
 --
--- Name: teams teamid; Type: DEFAULT; Schema: public; Owner: freecodecamp
+-- Name: teams team_id; Type: DEFAULT; Schema: public; Owner: freecodecamp
 --
 
-ALTER TABLE ONLY public.teams ALTER COLUMN teamid SET DEFAULT nextval('public.teams_teamid_seq'::regclass);
+ALTER TABLE ONLY public.teams ALTER COLUMN team_id SET DEFAULT nextval('public.teams_teamid_seq'::regclass);
 
 
 --
@@ -233,7 +233,7 @@ ALTER TABLE ONLY public.teams
 --
 
 ALTER TABLE ONLY public.teams
-    ADD CONSTRAINT teams_pkey PRIMARY KEY (teamid);
+    ADD CONSTRAINT teams_pkey PRIMARY KEY (team_id);
 
 
 --
@@ -241,7 +241,7 @@ ALTER TABLE ONLY public.teams
 --
 
 ALTER TABLE ONLY public.games
-    ADD CONSTRAINT games_opponent_id_fkey FOREIGN KEY (opponent_id) REFERENCES public.teams(teamid);
+    ADD CONSTRAINT games_opponent_id_fkey FOREIGN KEY (opponent_id) REFERENCES public.teams(team_id);
 
 
 --
@@ -249,7 +249,7 @@ ALTER TABLE ONLY public.games
 --
 
 ALTER TABLE ONLY public.games
-    ADD CONSTRAINT games_winner_id_fkey FOREIGN KEY (winner_id) REFERENCES public.teams(teamid);
+    ADD CONSTRAINT games_winner_id_fkey FOREIGN KEY (winner_id) REFERENCES public.teams(team_id);
 
 
 --
